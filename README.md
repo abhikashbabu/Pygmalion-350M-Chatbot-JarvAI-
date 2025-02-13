@@ -1,90 +1,69 @@
-# Pygmalion-350M-Chatbot-JarvAI-
-JarvAI is an AI-powered chatbot built using the Pygmalion-350M language model. It is a simple Flask-based API that allows users to interact with the chatbot via HTTP requests.
-Pygmalion-350M Chatbot API (JarvAI)
-Project Name: JarvAI - AI Chatbot using Pygmalion-350M
-Overview
-JarvAI is an AI-powered chatbot built using the Pygmalion-350M language model. It is a simple Flask-based API that allows users to interact with the chatbot via HTTP requests.
+#Pygmalion 350M – AI Chatbot Web Interface 🚀
+This project is an HTML + Flask Web Application using Pygmalion-350M as the backend conversational AI model. It is designed to create an online chatbot similar to Jarvis (from Iron Man) with Hinglish support and Roleplay capabilities.
 
-Features
-Natural language conversation with AI.
-Lightweight and fast using Pygmalion-350M model.
-REST API interface for easy integration into websites and apps.
+#🔥 Key Features:
+Web-based Chatbot: Access your AI assistant via any web browser.
+Pygmalion-350M Model: Optimized lightweight conversational model (350M) for quick and engaging responses.
+Roleplay & Assistant: Capable of casual talk, roleplaying, and answering general queries.
+Hinglish Support: Friendly conversations mixing Hindi & English.
+Flask Backend: Lightweight server to serve the model outputs.
+Customizable UI: Clean, simple chat interface with scope for adding speech recognition and TTS later.
+#📦 Tech Stack:
+HTML / CSS – Frontend chat interface.
+Python (Flask) – Backend for handling user messages and generating AI responses.
+Pygmalion-350M (HuggingFace Transformers) – AI model for chat generation.
+#⚙️ Installation & Setup:
+Clone the Repository:
 
-Requirements
-Python 3.8+
-Transformers library
-Flask library
-Install dependencies using:
-pip install transformers flask torch
+bash
+Copy
+Edit
+git clone https://github.com/username/repo-name.git
+cd repo-name
+Install Dependencies:
 
-Model Used
-Pygmalion-350M from Hugging Face.
-Model URL: https://huggingface.co/PygmalionAI/pygmalion-350m
+bash
+Copy
+Edit
+pip install torch transformers accelerate flask
+Download Model (Pygmalion-350M):
 
-Setup & Installation
-Clone the repository or create a project folder.
-Create a Python file (e.g., app.py) and add the following code:
+python
+Copy
+Edit
 from transformers import AutoModelForCausalLM, AutoTokenizer
-from flask import Flask, request, jsonify
 
-app = Flask(__name__)
+model_name = "PygmalionAI/pygmalion-350m"
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+model = AutoModelForCausalLM.from_pretrained(model_name)
+Run Flask Server:
 
-tokenizer = AutoTokenizer.from_pretrained("PygmalionAI/pygmalion-350m")
-model = AutoModelForCausalLM.from_pretrained("PygmalionAI/pygmalion-350m").to("cpu")
-
-@app.route('/chat', methods=['POST'])
-def chat():
-    data = request.get_json()
-    user_input = data.get('message', '')
-    
-    if not user_input:
-        return jsonify({"error": "Message cannot be empty"}), 400
-
-    inputs = tokenizer(user_input, return_tensors="pt", padding=True, truncation=True).to("cpu")
-    outputs = model.generate(
-        inputs['input_ids'],
-        attention_mask=inputs['attention_mask'],
-        max_length=150,
-        pad_token_id=tokenizer.eos_token_id
-    )
-
-    response = tokenizer.decode(outputs[0], skip_special_tokens=True)
-    
-    return jsonify({"response": response})
-
-if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
-Run the application:
+bash
+Copy
+Edit
 python app.py
-The server will start at http://localhost:5000.
+Open in Browser:
 
-API Endpoint
-POST /chat
-Request:
-{
-  "message": "Hello, how are you?"
-}
-Response:
-{
-  "response": "I'm doing well, thank you for asking!"
-}
-
-Deployment
-Locally
-Simply run the Flask app with:
-python app.py
-On a Cloud Platform (Optional)
-Deploy on platforms like Heroku, Render, or AWS EC2 for public access.
-
-Notes
-Ensure your system has sufficient RAM and CPU for smooth performance.
-For production, consider using GPU or cloud computing for better efficiency.
-
-Future Enhancements
-Add a frontend website for chat UI.
-Integrate user authentication.
-Implement conversation history.
-Add voice-to-text functionality.
-
-Contact
-For queries or issues, reach out at info@appsredx.com , abhikashbabu@gmail.com .
+cpp
+Copy
+Edit
+http://127.0.0.1:5000
+#📄 Project Structure:
+bash
+Copy
+Edit
+/project-root
+│
+├── app.py              # Flask backend server
+├── templates/
+│   └── index.html       # Chat Interface (HTML + CSS)
+├── static/
+│   └── style.css        # Optional CSS
+├── model/               # (Optional) Pre-downloaded model files
+💡 Future Scope:
+Speech-to-Text Integration for voice commands.
+Text-to-Speech Output for Jarvis-like audio responses.
+API-based GPT Model Support for advanced responses.
+User Authentication to personalize chat experiences.
+#🌐 Live Demo:
+(Host it using Flask on your local system or deploy to Render / Vercel / Railway / Heroku)
