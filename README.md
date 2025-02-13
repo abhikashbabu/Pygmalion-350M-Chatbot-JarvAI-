@@ -1,65 +1,101 @@
-# Pygmalion Chatbot
-
-Pygmalion Chatbot is an advanced conversational AI model built upon the Pygmalion-350M model, designed to provide human-like interactions with a focus on roleplay and natural dialogue capabilities. This chatbot is suitable for both developers and users seeking an engaging virtual assistant experience.
+# Project Name: JarvAI - AI Chatbot using Pygmalion-350M
+## Overview
+JarvAI is an AI-powered chatbot built using the Pygmalion-350M language model. It is a simple Flask-based API that allows users to interact with the chatbot via HTTP requests.
 
 ## Features
+- Natural language conversation with AI.
+- Lightweight and fast using Pygmalion-350M model.
+- REST API interface for easy integration into websites and apps.
+## Requirements
+- Python 3.8+
+- Transformers library
+- Flask library
+- Install dependencies using:
+- pip install transformers flask torch
 
-- **Conversational AI:** Supports natural conversations with context understanding.
-- **Roleplay Focus:** Designed to handle roleplay scenarios effectively.
-- **Lightweight Model:** Utilizes Pygmalion-350M for efficiency and performance.
-- **Text-to-Speech Integration:** Realistic voice responses using `pyttsx3`.
-- **Speech Recognition:** Voice commands via `speech_recognition`.
-- **Jokes & Wikipedia Search:** Light-hearted interactions and quick information retrieval.
-- **Weather Updates:** Fetches current weather using OpenWeatherMap API.
-- **Real-Time Clock:** Provides current time updates.
 
-## Installation
+## Model Used
+- Pygmalion-350M from Hugging Face.
+- Model URL: https://huggingface.co/PygmalionAI/pygmalion-350m
 
-```bash
-# Clone the repository
-git clone https://github.com/username/pygmalion-chatbot.git
-cd pygmalion-chatbot
+## Setup & Installation
 
-# Create virtual environment
-python -m venv env
-source env/bin/activate # Linux/Mac
-env\Scripts\activate # Windows
+- Clone the repository or create a project folder.
+- Create a Python file (e.g., app.py) and add the following code:
 
-# Install dependencies
-pip install -r requirements.txt
+```sh
+from transformers import AutoModelForCausalLM, AutoTokenizer
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
+tokenizer = AutoTokenizer.from_pretrained("PygmalionAI/pygmalion-350m")
+model = AutoModelForCausalLM.from_pretrained("PygmalionAI/pygmalion-350m").to("cpu")
+
+@app.route('/chat', methods=['POST'])
+def chat():
+    data = request.get_json()
+    user_input = data.get('message', '')
+    
+    if not user_input:
+        return jsonify({"error": "Message cannot be empty"}), 400
+
+    inputs = tokenizer(user_input, return_tensors="pt", padding=True, truncation=True).to("cpu")
+    outputs = model.generate(
+        inputs['input_ids'],
+        attention_mask=inputs['attention_mask'],
+        max_length=150,
+        pad_token_id=tokenizer.eos_token_id
+    )
+
+    response = tokenizer.decode(outputs[0], skip_special_tokens=True)
+    
+    return jsonify({"response": response})
+
+if __name__ == '__main__':
+    app.run(debug=True, host='0.0.0.0', port=5000)
+
 ```
 
-## Dependencies
+Run the application:
 
-- `torch`
-- `transformers`
-- `speechrecognition`
-- `pyttsx3`
-- `pyjokes`
-- `wikipedia-api`
-- `requests`
-
-## Usage
-
-```bash
-python jarvis.py
+```sh
+python app.py
 ```
+The server will start at http://localhost:5000.
 
-## Example Commands
 
-- "What is the time?"
-- "Tell me a joke."
-- "Search Wikipedia for Elon Musk."
-- "What's the weather in Delhi?"
+## Deployment
+- Locally
+- Simply run the Flask app with:
+```sh
+python app.py
+```
+- On a Cloud Platform (Optional)
+- Deploy on platforms like Heroku, Render, or AWS EC2 for public access.
 
-## API Key Setup
+# Notes
+Ensure your system has sufficient RAM and CPU for smooth performance.
+For production, consider using GPU or cloud computing for better efficiency.
 
-Weather updates require an API key from OpenWeatherMap:
 
-1. Visit [OpenWeatherMap](https://openweathermap.org/).
-2. Create an account and get your API key.
-3. Replace `api_key` in `jarvis.py` with your key.
+# Future Scope:
+- Speech-to-Text Integration for voice commands.
+- Text-to-Speech Output for Jarvis-like audio responses.
+- API-based GPT Model Support for advanced responses.
+- User Authentication to personalize chat experiences.
+
+## Plugins
+
+Instructions on how to use them in your own application are linked below.
+
+| Plugin | README |
+| ------ | ------ |
+| Transformers library | https://huggingface.co/docs/transformers/index |
+| Flask library| https://pypi.org/project/Flask/ |
+
+## Contact
+For queries or issues, reach out at info@appsredx.com , abhikashbabu@gmail.com .
 
 ## License
-
-This project is licensed under the MIT License.
+MIT
