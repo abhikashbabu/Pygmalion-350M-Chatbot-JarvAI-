@@ -2,6 +2,9 @@
 ## Overview
 JarvAI is an AI-powered chatbot built using the Pygmalion-350M language model. It is a simple Flask-based API that allows users to interact with the chatbot via HTTP requests.
 
+## Screenshort
+<img src="https://raw.githubusercontent.com/abhikashbabu/Pygmalion-350M-Chatbot-JarvAI-/refs/heads/main/jarvis.png" alt="abhikashbabu" />
+
 ## Features
 - Natural language conversation with AI.
 - Lightweight and fast using Pygmalion-350M model.
