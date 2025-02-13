@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JarvAI Chatbot</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f3f3f3; }
+        .chat-container { max-width: 600px; margin: 50px auto; background-color: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+        .chat-box { height: 400px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; background-color: #fafafa; }
+        .input-area { display: flex; }
+        .input-area input { flex-grow: 1; padding: 10px; border-radius: 4px; border: 1px solid #ccc; }
+        .input-area button { padding: 10px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-box" id="chat-box"></div>
+        <form class="input-area" id="chat-form">
+            <input type="text" id="user-message" placeholder="Aapka message likho..." required>
+            <button type="submit">Send</button>
+        </form>
+    </div>
+
+    <script>
+        const chatForm = document.getElementById('chat-form');
+        const chatBox = document.getElementById('chat-box');
+        chatForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const userMessage = document.getElementById('user-message').value;
+            appendMessage('You: ' + userMessage);
+
+            const response = await fetch('/chat', {
+                method: 'POST',
+                body: new URLSearchParams({ message: userMessage }),
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+            });
+
+            const data = await response.json();
+            appendMessage('Jarvis: ' + data.response);
+
+            document.getElementById('user-message').value = '';
+        });
+
+        function appendMessage(message) {
+            const messageElement = document.createElement('div');
+            messageElement.textContent = message;
+            chatBox.appendChild(messageElement);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+    </script>
+</body>
+</html>
