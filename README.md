@@ -1,69 +1,65 @@
-#Pygmalion 350M – AI Chatbot Web Interface 🚀
-This project is an HTML + Flask Web Application using Pygmalion-350M as the backend conversational AI model. It is designed to create an online chatbot similar to Jarvis (from Iron Man) with Hinglish support and Roleplay capabilities.
+# Pygmalion Chatbot
 
-#🔥 Key Features:
-Web-based Chatbot: Access your AI assistant via any web browser.
-Pygmalion-350M Model: Optimized lightweight conversational model (350M) for quick and engaging responses.
-Roleplay & Assistant: Capable of casual talk, roleplaying, and answering general queries.
-Hinglish Support: Friendly conversations mixing Hindi & English.
-Flask Backend: Lightweight server to serve the model outputs.
-Customizable UI: Clean, simple chat interface with scope for adding speech recognition and TTS later.
-#📦 Tech Stack:
-HTML / CSS – Frontend chat interface.
-Python (Flask) – Backend for handling user messages and generating AI responses.
-Pygmalion-350M (HuggingFace Transformers) – AI model for chat generation.
-#⚙️ Installation & Setup:
-Clone the Repository:
+Pygmalion Chatbot is an advanced conversational AI model built upon the Pygmalion-350M model, designed to provide human-like interactions with a focus on roleplay and natural dialogue capabilities. This chatbot is suitable for both developers and users seeking an engaging virtual assistant experience.
 
-bash
-Copy
-Edit
-git clone https://github.com/username/repo-name.git
-cd repo-name
-Install Dependencies:
+## Features
 
-bash
-Copy
-Edit
-pip install torch transformers accelerate flask
-Download Model (Pygmalion-350M):
+- **Conversational AI:** Supports natural conversations with context understanding.
+- **Roleplay Focus:** Designed to handle roleplay scenarios effectively.
+- **Lightweight Model:** Utilizes Pygmalion-350M for efficiency and performance.
+- **Text-to-Speech Integration:** Realistic voice responses using `pyttsx3`.
+- **Speech Recognition:** Voice commands via `speech_recognition`.
+- **Jokes & Wikipedia Search:** Light-hearted interactions and quick information retrieval.
+- **Weather Updates:** Fetches current weather using OpenWeatherMap API.
+- **Real-Time Clock:** Provides current time updates.
 
-python
-Copy
-Edit
-from transformers import AutoModelForCausalLM, AutoTokenizer
+## Installation
 
-model_name = "PygmalionAI/pygmalion-350m"
-tokenizer = AutoTokenizer.from_pretrained(model_name)
-model = AutoModelForCausalLM.from_pretrained(model_name)
-Run Flask Server:
+```bash
+# Clone the repository
+git clone https://github.com/username/pygmalion-chatbot.git
+cd pygmalion-chatbot
 
-bash
-Copy
-Edit
-python app.py
-Open in Browser:
+# Create virtual environment
+python -m venv env
+source env/bin/activate # Linux/Mac
+env\Scripts\activate # Windows
 
-cpp
-Copy
-Edit
-http://127.0.0.1:5000
-#📄 Project Structure:
-bash
-Copy
-Edit
-/project-root
-│
-├── app.py              # Flask backend server
-├── templates/
-│   └── index.html       # Chat Interface (HTML + CSS)
-├── static/
-│   └── style.css        # Optional CSS
-├── model/               # (Optional) Pre-downloaded model files
-💡 Future Scope:
-Speech-to-Text Integration for voice commands.
-Text-to-Speech Output for Jarvis-like audio responses.
-API-based GPT Model Support for advanced responses.
-User Authentication to personalize chat experiences.
-#🌐 Live Demo:
-(Host it using Flask on your local system or deploy to Render / Vercel / Railway / Heroku)
+# Install dependencies
+pip install -r requirements.txt
+```
+
+## Dependencies
+
+- `torch`
+- `transformers`
+- `speechrecognition`
+- `pyttsx3`
+- `pyjokes`
+- `wikipedia-api`
+- `requests`
+
+## Usage
+
+```bash
+python jarvis.py
+```
+
+## Example Commands
+
+- "What is the time?"
+- "Tell me a joke."
+- "Search Wikipedia for Elon Musk."
+- "What's the weather in Delhi?"
+
+## API Key Setup
+
+Weather updates require an API key from OpenWeatherMap:
+
+1. Visit [OpenWeatherMap](https://openweathermap.org/).
+2. Create an account and get your API key.
+3. Replace `api_key` in `jarvis.py` with your key.
+
+## License
+
+This project is licensed under the MIT License.
